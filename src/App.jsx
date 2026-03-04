@@ -161,7 +161,7 @@ const cartItemCount = cart ? cart.reduce((total, item) => total + (item.quantity
           <div className="cart-footer">
             <div className="cart-total">
               <span>Total</span>
-              <span>₹{cartTotal.toLocaleString('en-IN')}</span>
+             <span>₹{(cartTotal || 0).toLocaleString('en-IN')}</span>
             </div>
             {/* Make sure your handleCheckout function from earlier is here! */}
             <button className="checkout-btn" onClick={handleCheckout}>
