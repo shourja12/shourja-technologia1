@@ -25,8 +25,35 @@ export default function App() {
     return () => unsubscribe(); // Cleanup listener
   }, []);
 
-  const addToCart = (product) => { /* ... Keep your existing addToCart code ... */ };
-  const updateQuantity = (id, amount) => { /* ... Keep your existing updateQuantity code ... */ };
+  const addToCart = (product) => { setCart((prevCart) => {
+      // 1. Check if the item is already in the cart
+      const existingItem = prevCart.find(item => item.id === product.id);
+      
+      if (existingItem) {
+        // 2. If it is, just increase the quantity by 1
+        return prevCart.map(item => 
+          item.id === product.id 
+            ? { ...item, quantity: item.quantity + 1 } 
+            : item
+        );
+      }
+      
+      // 3. If it is a new item, add it to the cart with a quantity of 1
+      return [...prevCart, { ...product, quantity: 1 }];});
+ setIsCartOpen(true); 
+  };
+  const updateQuantity = (id, amount) => {
+    setCart((prevCart) => 
+      prevCart.map(item => {
+        if (item.id === id) {
+          const newQuantity = item.quantity + amount;
+          // Don't let quantity drop below 1 using this button
+          return { ...item, quantity: newQuantity > 0 ? newQuantity : 1 }; 
+        }
+        return item;
+      })
+    );
+  };
   const removeFromCart = (id) => setCart((prevCart) => prevCart.filter(item => item.id !== id));
 
   const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
