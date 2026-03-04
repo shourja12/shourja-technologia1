@@ -54,7 +54,7 @@ export default function ProductDetails({ addToCart }) {
           <p className="details-long-desc">{product.longDesc}</p>
           
           <button className="add-to-cart-large" onClick={() => addToCart(product)}>
-            Add to Cart - ${product.price.toFixed(2)}
+            Add to Cart - ₹{product.price.toLocaleString('en-IN')}
           </button>
         </div>
       </div>
