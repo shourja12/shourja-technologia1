@@ -125,13 +125,54 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route path="/product/:id" element={<ProductDetails addToCart={addToCart} />} />
       </Routes>
-
-      {/* Cart Drawer */}
+{/* Cart Drawer */}
       <div className={`cart-overlay ${isCartOpen ? 'open' : ''}`} onClick={() => setIsCartOpen(false)} />
       <div className={`cart-drawer ${isCartOpen ? 'open' : ''}`}>
-         {/* Keep your existing cart drawer code here */}
+        
+        <div className="cart-header">
+          <h2>Your Cart.</h2>
+          <button className="close-btn" onClick={() => setIsCartOpen(false)}>&times;</button>
+        </div>
+
+        <div className="cart-items">
+          {cart.length === 0 ? (
+            <p className="empty-cart">Your cart is currently empty.</p>
+          ) : (
+            cart.map((item) => (
+              <div key={item.id} className="cart-item">
+                <img src={item.image} alt={item.name} className="cart-item-img" />
+                <div className="cart-item-info" style={{ flexGrow: 1 }}>
+                  <div className="cart-item-title">{item.name}</div>
+                  <div className="cart-item-price">₹{item.price.toLocaleString('en-IN')}</div>
+                  
+                  <div className="quantity-controls" style={{ marginTop: '10px' }}>
+                    <button className="qty-btn" onClick={() => updateQuantity(item.id, -1)}>-</button>
+                    <span style={{ color: 'white', fontWeight: 'bold' }}>{item.quantity}</span>
+                    <button className="qty-btn" onClick={() => updateQuantity(item.id, 1)}>+</button>
+                    <button className="remove-btn" onClick={() => removeFromCart(item.id)} style={{ marginLeft: 'auto' }}>Remove</button>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+
+        {/* Only show the footer if there are items in the cart */}
+        {cart.length > 0 && (
+          <div className="cart-footer">
+            <div className="cart-total">
+              <span>Total</span>
+              <span>₹{cartTotal.toLocaleString('en-IN')}</span>
+            </div>
+            {/* Make sure your handleCheckout function from earlier is here! */}
+            <button className="checkout-btn" onClick={handleCheckout}>
+              Proceed to Checkout
+            </button>
+          </div>
+        )}
+
       </div>
-      
+       
     </Router>
   );
 }
