@@ -2,7 +2,7 @@
   "name": "modern-store",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://shourja12.github.io/shourja-technologia/",
+  
   "type": "module",
   "scripts": {
     "dev": "vite",
