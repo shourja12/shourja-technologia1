@@ -56,9 +56,8 @@ export default function App() {
   };
   const removeFromCart = (id) => setCart((prevCart) => prevCart.filter(item => item.id !== id));
 
-  const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
-  const cartTotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-
+const cartItemCount = cart ? cart.reduce((total, item) => total + (item.quantity || 1), 0) : 0;
+  const cartTotal = cart ? cart.reduce((total, item) => total + ((item.price || 0) * (item.quantity || 1)), 0) : 0;
   return (
     <Router>
       <nav className="navbar">
