@@ -142,8 +142,7 @@ const cartItemCount = cart ? cart.reduce((total, item) => total + (item.quantity
                 <img src={item.image} alt={item.name} className="cart-item-img" />
                 <div className="cart-item-info" style={{ flexGrow: 1 }}>
                   <div className="cart-item-title">{item.name}</div>
-                  <div className="cart-item-price">₹{item.price.toLocaleString('en-IN')}</div>
-                  
+                 <div className="cart-item-price">₹{Number(item.price || 0).toLocaleString('en-IN')}</div>
                   <div className="quantity-controls" style={{ marginTop: '10px' }}>
                     <button className="qty-btn" onClick={() => updateQuantity(item.id, -1)}>-</button>
                     <span style={{ color: 'white', fontWeight: 'bold' }}>{item.quantity}</span>
@@ -164,7 +163,7 @@ const cartItemCount = cart ? cart.reduce((total, item) => total + (item.quantity
              <span>₹{(cartTotal || 0).toLocaleString('en-IN')}</span>
             </div>
             {/* Make sure your handleCheckout function from earlier is here! */}
-            <button className="checkout-btn" onClick={handleCheckout}>
+           <button className="checkout-btn" onClick={typeof handleCheckout !== 'undefined' ? handleCheckout : () => alert("Checkout function missing!")}>
               Proceed to Checkout
             </button>
           </div>
